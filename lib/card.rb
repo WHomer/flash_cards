@@ -11,10 +11,4 @@ class Card
     @category = category
   end
 
-  def new(question, answer, category)
-    @question = question
-    @answer = answer
-    @category = category
-  end
-
 end
