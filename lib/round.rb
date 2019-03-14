@@ -21,8 +21,6 @@ class Round
     @turns.push(new_turn)
     if new_turn.correct?
       @number_correct += 1
-    else
-
     end
     new_turn
   end
@@ -55,6 +53,43 @@ class Round
       end
     end
     (correct / total) * 100
+  end
+
+  def start
+    @total_cards_in_deck = @deck.cards.length
+    puts "Welcome! You're playing with #{@total_cards_in_deck} cards."
+    puts "-------------------------------------------------"
+    next_question_prompt
+  end
+
+  def next_question_prompt
+    while @deck.cards.length > 0
+      current_card_position = @total_cards_in_deck - @deck.cards.length + 1
+      puts "This is card number #{current_card_position} out of #{@total_cards_in_deck}."
+      puts "Question: #{@deck.cards[0].question}"
+      user_guess = gets.chomp
+      take_turn(user_guess)
+      puts @turns.last.feedback
+    end
+  end_prompt
+  end
+
+  def end_prompt
+    puts "****** Game over! ******"
+    puts "You had #{@number_correct} correct guesses out of #{@total_cards_in_deck} for a total score of #{@percent_correct}%."
+
+    categories_array = []
+    @turns.each do |each_turn|
+      card = each_turn.card
+      categories_array.push(card.category)
+    end
+
+    categories_array.uniq!
+
+    categories_array.each do |category|
+      category_percentage = percent_correct_by_category(category)
+      puts "#{category} - #{category_percentage} correct"
+    end
   end
 
 end
