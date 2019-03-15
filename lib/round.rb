@@ -27,6 +27,7 @@ class Round
 
   def percent_correct
     @percent_correct = (@number_correct.to_f / @turns.length) * 100
+    @percent_correct.round(1)
   end
 
   def number_correct_by_category(category_name)
@@ -76,7 +77,7 @@ class Round
 
   def end_prompt
     puts "****** Game over! ******"
-    puts "You had #{@number_correct} correct guesses out of #{@total_cards_in_deck} for a total score of #{@percent_correct}%."
+    puts "You had #{@number_correct} correct guesses out of #{@total_cards_in_deck} for a total score of #{percent_correct}%."
 
     categories_array = []
     @turns.each do |each_turn|
