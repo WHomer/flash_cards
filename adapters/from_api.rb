@@ -5,7 +5,7 @@ class AdapterFromAPI
 
   def read_data
     final_questions = []
-    uri = URI('https://opentdb.com/api.php?amount=2')
+    uri = URI('https://opentdb.com/api.php?amount=1')
     response = Net::HTTP.get_response(uri)
     results = JSON.parse(response.body)
     questions = results['results']
@@ -14,8 +14,7 @@ class AdapterFromAPI
       answer = record['correct_answer']
       category = record['category']
       final_questions.push([question,answer,category])
-      #require 'pry'; binding.pry
     end
-    return final_questions
+    final_questions
   end
 end
