@@ -1,19 +1,24 @@
 require './lib/card'
+require './adapters/from_text'
+require './adapters/from_csv'
+require './adapters/from_api'
 
 class CardGenerator
 
   def initialize
-    @filename = 'cards.txt'
     @cards_array = []
+    @text_adapter = AdapterFromText.new.read_file
+    @csv_adapter = AdapterFromCSV.new.read_file
+    @api_adapter = AdapterFromAPI.new.read_data
   end
 
   def load_cards
-    File.readlines(@filename).map do |line|
-      card_line = line.chomp.split(",")
+    contents = @api_adapter
+    contents.each do |content|
 
-      question = card_line[0]
-      answer = card_line[1]
-      category = card_line[2]
+      question = content[0]
+      answer = content[1]
+      category = content[2]
       card = Card.new(question, answer, category)
 
       @cards_array.push(card)
